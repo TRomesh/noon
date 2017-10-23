@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import HomeContainer from "./containers/homeContainer";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import createBrowserHistory from "history/createBrowserHistory";
+import 'typeface-roboto';
 const history = createBrowserHistory({});
 
 class App extends Component {
