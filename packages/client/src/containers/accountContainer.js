@@ -4,7 +4,7 @@ import BottomNavigation from "../components/bottomnavigation";
 import { GetPosts, LikePost } from "../actions/postActions";
 
 
-class HomeContainer extends Component {
+class AccountContainer extends Component {
 
   render() {
     return (
@@ -30,4 +30,4 @@ let mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AccountContainer);
