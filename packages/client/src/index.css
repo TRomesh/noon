@@ -1,0 +1,8 @@
+@media screen and (max-width: 412px) {
+  .MuiBottomNavigation-root-2 {
+      position: absolute;
+      bottom: 0;
+      width:100%;
+      background-color: #E91E63;
+    }
+}

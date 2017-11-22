@@ -7,7 +7,7 @@ import BottomNavigation, { BottomNavigationButton } from 'material-ui/BottomNavi
 
 const styles = {
   root: {
-    width: 500,
+    width: '100%',
   },
 };
 
@@ -26,7 +26,7 @@ handleChange = (event, value) => {
     const { classes } = this.props;
     const { value } = this.state;
     return (
-      <BottomNavigation value={value} onChange={this.handleChange} className={classes.root}>
+      <BottomNavigation value={value} onChange={this.handleChange} >
         <BottomNavigationButton label="Home" value="recents" icon={<HomeIcon />} />
         <BottomNavigationButton label="Favorites" value="favorites" icon={<FavoriteIcon />} />
       </BottomNavigation>
