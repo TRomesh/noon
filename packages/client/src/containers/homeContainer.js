@@ -1,34 +1,66 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import BottomNavigation from "../components/bottomnavigation";
-import { GetBrands, LikeBrand } from "../actions/brandActions";
+import { withStyles } from 'material-ui/styles';
+import List from 'material-ui/List';
+import { GetBrands, LikeBrand, SearchBrand } from "../actions/brandActions";
 import Brand from "../components/brand";
+import Button from 'material-ui/Button';
+import SearchIcon from 'material-ui-icons/Search';
+import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
+import { FormControl, FormHelperText } from 'material-ui/Form';
 import {withRouter} from "react-router-dom";
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  
+});
 
 
 class HomeContainer extends Component {
 
-  constructor(props) {
-    super(props);
+  state={
+
+  }
+
+  handleChange = prop => event => {
+    this.setState({ [prop]: event.target.value });
+  };
+
+  componentDidMount(){
+    this.props.Getbrands();
   }
   
   BrandList = () => {
     return this.props.brands.map((brand,i) =>{
-      return <Brand key={i}  
+      return <Brand key={i}
+      id={brand._id}  
       title={brand.title} 
       description={brand.description} 
       url={brand.url} 
       datetime={brand.datetime} 
-      likecount={brand.likecount}
+      liked={brand.like}
+      like={this.props.Likebrand}
       history={this.props.history}/>;
     });
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <div>
+      <List dense={true}>
         {this.BrandList()}
-      </div>
+        <div>
+        <FormControl fullWidth className={classes.formControl}>
+          <Input
+            id="amount"
+            onChange={this.handleChange('amount')}
+            startAdornment={<InputAdornment position="start"><SearchIcon/></InputAdornment>}
+          />
+        </FormControl>
+        </div>
+      </List>
     );
   }
 }
@@ -41,13 +73,16 @@ let mapStateToProps = (state, props) => {
 
 let mapDispatchToProps = dispatch => {
   return {
-    Getbrands: data => {
+    Getbrands: () => {
       dispatch(GetBrands());
     },
-    Likebrands: data => {
+    Likebrand: data => {
       dispatch(LikeBrand(data));
+    },
+    Searchbrand:data=>{
+      dispatch(SearchBrand(data));
     }
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeContainer));
+export default withStyles(styles)(withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeContainer)));

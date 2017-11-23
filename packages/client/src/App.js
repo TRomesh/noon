@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import HomeContainer from "./containers/homeContainer";
+import FavoriteContainer from "./containers/favoritesContainer";
 import MainBrand from "./components/mainbrand";
-import { Router, Route, Switch, Redirect } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import createBrowserHistory from "history/createBrowserHistory";
 import Navigation from "../src/components/bottomnavigation";
 import 'typeface-roboto';
@@ -13,6 +14,7 @@ const App =()=>
   <Switch>
     <Navigation>
       <Route exact path="/" component={HomeContainer} />
+      <Route exact path="/favorite" component={FavoriteContainer} />
       <Route exact path="/brand" component={MainBrand} />
     </Navigation>
   </Switch>

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import HomeIcon from 'material-ui-icons/Home';
-import FavoriteIcon from 'material-ui-icons/Favorite';
+import StarIcon from 'material-ui-icons/Star';
 import BottomNavigation, { BottomNavigationButton } from 'material-ui/BottomNavigation';
 
 const styles = {
@@ -29,8 +29,8 @@ handleChange = (event, value) => {
     return (
       <div>
       <BottomNavigation value={value} onChange={this.handleChange} className={classes.root}>
-        <BottomNavigationButton label="Home" value="recents" icon={<HomeIcon />} />
-        <BottomNavigationButton label="Favorites" value="favorites" icon={<FavoriteIcon />} />
+        <BottomNavigationButton label="Home" value="recents" icon={<HomeIcon/>} />
+        <BottomNavigationButton label="Favorites" value="favorites" icon={<StarIcon />} />
       </BottomNavigation>
         {this.props.children}
       </div>
@@ -42,4 +42,4 @@ Bottomnavigation.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Bottomnavigation);
+export default withStyles(styles)((Bottomnavigation));

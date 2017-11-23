@@ -1,53 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import classnames from 'classnames';
-import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
-import Collapse from 'material-ui/transitions/Collapse';
+import List, {
+  ListItem,
+  ListItemAvatar,
+  ListItemIcon,
+  ListItemSecondaryAction,
+  ListItemText,
+} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
-import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
+import { FormGroup, FormControlLabel } from 'material-ui/Form';
+import Checkbox from 'material-ui/Checkbox';
+import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
-import red from 'material-ui/colors/red';
-import FavoriteIcon from 'material-ui-icons/Favorite';
-import ShareIcon from 'material-ui-icons/Share';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+import FolderIcon from 'material-ui-icons/Star';
+import StarIcon from 'material-ui-icons/Star';
 
-const styles = theme => ({
-  card: {
-    maxWidth: 400,
-  },
-  media: {
-    height: 194,
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
-  flexGrow: {
-    flex: '1 1 auto',
-  },
-});
 
-const RecipeReviewCard =({title,datetime,description,history,url,likecount})=>
-      <div>
-        <Card >
-          <CardHeader
-            avatar={
-              <Avatar aria-label="Recipe" className={styles.avatar} src={url}>
-               
-              </Avatar>
-            }
-            title={title}
-            subheader={datetime}
+const RecipeReviewCard =({id,title,datetime,description,history,url,liked,like})=>
+        <ListItem button>
+          <ListItemAvatar>
+            <Avatar src={url}/>
+          </ListItemAvatar>
+          <ListItemText
+            primary={title}
+            secondary={description}
             onClick={e=>{
               history.push({
                 pathname:"/brand",
@@ -56,26 +34,16 @@ const RecipeReviewCard =({title,datetime,description,history,url,likecount})=>
                   datetime:datetime,
                   description:description,
                   url:url,
-                  likecount:likecount
+                  like:liked
                 }
               });
             }}
           />
-          <CardContent>
-            <Typography component="p">
-            {description}
-            </Typography>
-          </CardContent>
-          <CardActions disableActionSpacing>
-            <IconButton aria-label="Add to favorites">
-              <FavoriteIcon />
+          <ListItemSecondaryAction>
+            <IconButton aria-label="Favorite">
+              <StarIcon onClick={e=>{like({id:id});}}/>
             </IconButton>
-            <IconButton aria-label="Share">
-              <ShareIcon />
-            </IconButton>
-            <div className={styles.flexGrow} />
-          </CardActions>
-        </Card>
-      </div>;
+          </ListItemSecondaryAction>
+        </ListItem>;
 
 export default RecipeReviewCard;

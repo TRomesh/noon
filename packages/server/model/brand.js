@@ -6,7 +6,7 @@ const Brand = new Schema({
   description:String,
   url:String,
   datetime:String,
-  likecount: Number
+  like: Boolean
 });
 
 module.exports = mongoose.model('Brand',Brand);

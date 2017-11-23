@@ -10,7 +10,7 @@ const AppRoutes = require('./routes/approutes');
 const port =process.env.PORT || 3030;;
 
 mongoose.Promise = global.Promise;
-// mongoose.connect('mongodb://localhost:27017/noon');
+mongoose.connect('mongodb://localhost:27017/noon');
 
 
 app.use(bodyParser.json());

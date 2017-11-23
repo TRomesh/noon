@@ -3,6 +3,7 @@ import {
   GET_BRANDS,
   SEARCH_BRAND,
   LIKE_BRAND,
+  GET_LIKED_BRANDS,
   ERROR_BRANDS,
   DELETE_LIKED_BRAND
 } from "../constants/brandConstants";
@@ -30,6 +31,18 @@ function addbrand(data) {
 function getbrand(data) {
   return {
     type: GET_BRANDS,
+    data: data
+  };
+}
+
+/**
+ * Get liked brands
+ * @param data
+ * @returns {{type, payload: *}}
+ */
+function getlikedbrand(data) {
+  return {
+    type: GET_LIKED_BRANDS,
     data: data
   };
 }
@@ -100,6 +113,15 @@ export const GetBrands = () => {
   };
 };
 
+export const GetLikedBrands = () => {
+  return dispatch => {
+    return axios
+      .get(`${Service}/getalllikedbrand`)
+      .then(data => dispatch(getbrand(data)))
+      .catch(error => dispatch(errorbrands(error)));
+  };
+};
+
 export const SearchBrand = (brand) => {
   return dispatch => {
     return axios
@@ -112,7 +134,7 @@ export const SearchBrand = (brand) => {
 export const LikeBrand = brand => {
   return dispatch => {
     return axios
-      .brand(`${Service}/likebrand`, brand)
+      .post(`${Service}/likebrand`, brand)
       .then(data => dispatch(likebrand(data)))
       .catch(error => dispatch(errorbrands(error)));
   };

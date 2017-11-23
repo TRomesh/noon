@@ -10,6 +10,13 @@ module.exports = function(app) {
     })
   });
 
+  app.get("/getalllikedbrand", function(req, res) {
+    Brand.find({like:true},(err,brands)=>{
+        if(err){return next(err);}
+        res.json(brands);
+    })
+  });
+
   app.get("/serachbrand", function(req, res) {
     Brand.find({ $or:[ {title:req.query.title}, {description:req.query.description} ]},(err,brands)=>{
         if(err){return next(err);}
@@ -31,8 +38,9 @@ module.exports = function(app) {
   });
 
   app.post("/likebrand", function(req, res) {
-    Brand.update({_id :req.body._id}, {$inc : { likecount : 1} },(err,brands)=>{
+    Brand.findOneAndUpdate({_id :req.body.id}, {like:true},{ new: true },(err,brands)=>{
       if(err){return next(err);}
+      console.log(brands);
       res.json(brands);
     });
   });

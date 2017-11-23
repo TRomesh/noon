@@ -8,7 +8,8 @@ describe("Testing noon server", () => {
             title:'Apple',
             description:'Apple inc.',
             url:'apple.com',
-            datetime:'2017.11.22'
+            datetime:'2017.11.22',
+            like:true
           });
           brand.save((err,newbrand)=>{
             if (err) { throw err; }
@@ -35,6 +36,15 @@ describe("Testing noon server", () => {
     });
 
     it("Like a brand", done => {
+        Brand.findOneAndUpdate({title:'Apple'}, {like:true},{ new: true },(err,brands)=>{
+            if(err){throw err;}
+            console.log(brands);
+            assert(brands.like == true );
+            done();
+          });
+    });
+
+    xit("Like increment a brand", done => {
         Brand.findOneAndUpdate({title:'Apple'}, {$inc : { likecount : 1} },{ new: true },(err,brands)=>{
             if(err){throw err;}
             assert(brands.likecount > 1);
