@@ -1,5 +1,7 @@
 import {
+  ADD_BRANDS,
   GET_BRANDS,
+  SEARCH_BRAND,
   LIKE_BRAND,
   ERROR_BRANDS,
   DELETE_LIKED_BRAND
@@ -9,6 +11,18 @@ import axios from "axios";
 const Service = process.env.REACT_APP_SERVER;
 
 /**
+ * Add brands
+ * @param data
+ * @returns {{type, payload: *}}
+ */
+function addbrand(data) {
+  return {
+    type: ADD_BRANDS,
+    data: data
+  };
+}
+
+/**
  * Get brands
  * @param data
  * @returns {{type, payload: *}}
@@ -16,6 +30,18 @@ const Service = process.env.REACT_APP_SERVER;
 function getbrand(data) {
   return {
     type: GET_BRANDS,
+    data: data
+  };
+}
+
+/**
+ * Get brands
+ * @param data
+ * @returns {{type, payload: *}}
+ */
+function searchbrand(data) {
+  return {
+    type: SEARCH_BRAND,
     data: data
   };
 }
@@ -55,24 +81,38 @@ function errorbrands(data) {
     data: data
   };
 }
+  
+export const AddBrands = () => {
+    return dispatch => {
+      return axios
+        .post(`${Service}/addbrand`)
+        .then(data => dispatch(getbrand(data)))
+        .catch(error => dispatch(errorbrands(error)));
+    };
+};
 
-export const GetPosts = () => {
+export const GetBrands = () => {
   return dispatch => {
     return axios
-      .get(`${Service}/getallbrand`, {
-        headers: { Authorization: localStorage.getItem("jwtToken") }
-      })
+      .get(`${Service}/getallbrand`)
       .then(data => dispatch(getbrand(data)))
       .catch(error => dispatch(errorbrands(error)));
   };
 };
 
-export const LikePost = brand => {
+export const SearchBrand = (brand) => {
   return dispatch => {
     return axios
-      .brand(`${Service}/likebrand`, brand, {
-        headers: { Authorization: localStorage.getItem("jwtToken") }
-      })
+      .get(`${Service}/serachbrand`,{ params:brand})
+      .then(data => dispatch(searchbrand(data)))
+      .catch(error => dispatch(errorbrands(error)));
+  };
+};
+
+export const LikeBrand = brand => {
+  return dispatch => {
+    return axios
+      .brand(`${Service}/likebrand`, brand)
       .then(data => dispatch(likebrand(data)))
       .catch(error => dispatch(errorbrands(error)));
   };
@@ -83,8 +123,7 @@ export const DeleteLikedPost = brand => {
     return axios
       .delete(`${Service}/deletelikedbrand`, {
         data: brand,
-        params: { force: true },
-        headers: { Authorization: "Bearer " + localStorage.getItem("jwtToken") }
+        params: { force: true }
       })
       .then(data => dispatch(deletelikedbrand(data)))
       .catch(error => dispatch(errorbrands(error)));

@@ -30,14 +30,14 @@ module.exports = function(app) {
       });
   });
 
-  app.post("/likepost", function(req, res) {
-    Brand.update({_id :id}, {$inc : { likecount : 1} },(err,brands)=>{
+  app.post("/likebrand", function(req, res) {
+    Brand.update({_id :req.body._id}, {$inc : { likecount : 1} },(err,brands)=>{
       if(err){return next(err);}
       res.json(brands);
     });
   });
 
-  app.get("/deletelikedpost", function(req, res) {
+  app.get("/deletelikedbrand", function(req, res) {
     res.send({ hi: "there" });
   });
 };

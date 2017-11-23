@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
 import Collapse from 'material-ui/transitions/Collapse';
 import Avatar from 'material-ui/Avatar';
+import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import red from 'material-ui/colors/red';
@@ -36,37 +37,33 @@ const styles = theme => ({
   },
 });
 
-class RecipeReviewCard extends React.Component {
-  state = { expanded: false };
-
-  handleExpandClick = () => {
-    this.setState({ expanded: !this.state.expanded });
-  };
-
-  render() {
-    const { classes } = this.props;
-
-    return (
+const RecipeReviewCard =({title,datetime,description,history,url,likecount})=>
       <div>
-        <Card className={classes.card}>
+        <Card >
           <CardHeader
             avatar={
-              <Avatar aria-label="Recipe" className={classes.avatar}>
-                R
+              <Avatar aria-label="Recipe" className={styles.avatar} src={url}>
+               
               </Avatar>
             }
-            title="Shrimp and Chorizo Paella"
-            subheader="September 14, 2016"
-          />
-          <CardMedia
-            className={classes.media}
-            image="/static/images/cards/paella.jpg"
-            title="Contemplative Reptile"
+            title={title}
+            subheader={datetime}
+            onClick={e=>{
+              history.push({
+                pathname:"/brand",
+                state:{
+                  title:title,
+                  datetime:datetime,
+                  description:description,
+                  url:url,
+                  likecount:likecount
+                }
+              });
+            }}
           />
           <CardContent>
             <Typography component="p">
-              This impressive paella is a perfect party dish and a fun meal to cook together with
-              your guests. Add 1 cup of frozen peas along with the mussels, if you like.
+            {description}
             </Typography>
           </CardContent>
           <CardActions disableActionSpacing>
@@ -76,26 +73,9 @@ class RecipeReviewCard extends React.Component {
             <IconButton aria-label="Share">
               <ShareIcon />
             </IconButton>
-            <div className={classes.flexGrow} />
-            <IconButton
-              className={classnames(classes.expand, {
-                [classes.expandOpen]: this.state.expanded,
-              })}
-              onClick={this.handleExpandClick}
-              aria-expanded={this.state.expanded}
-              aria-label="Show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton>
+            <div className={styles.flexGrow} />
           </CardActions>
         </Card>
-      </div>
-    );
-  }
-}
+      </div>;
 
-RecipeReviewCard.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(RecipeReviewCard);
+export default RecipeReviewCard;
