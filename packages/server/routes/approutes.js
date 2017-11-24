@@ -7,7 +7,7 @@ module.exports = function(app) {
     Brand.find({},(err,brands)=>{
         if(err){return next(err);}
         res.json(brands);
-    })
+    });
   });
 
   app.get("/getalllikedbrand", function(req, res) {

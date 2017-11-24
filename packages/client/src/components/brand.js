@@ -14,9 +14,10 @@ import { FormGroup, FormControlLabel } from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
-import FolderIcon from 'material-ui-icons/Star';
 import StarIcon from 'material-ui-icons/Star';
-
+import FavoriteIcon from 'material-ui-icons/Favorite';
+import { yellow, grey } from 'material-ui/colors';
+import Icon from 'material-ui/Icon';
 
 const RecipeReviewCard =({id,title,datetime,description,history,url,liked,like})=>
         <ListItem button>
@@ -40,8 +41,10 @@ const RecipeReviewCard =({id,title,datetime,description,history,url,liked,like})
             }}
           />
           <ListItemSecondaryAction>
-            <IconButton aria-label="Favorite">
-              <StarIcon onClick={e=>{like({id:id});}}/>
+            <IconButton aria-label="Favorite" onClick={e=>{like({id:id});}}>
+            {
+              (!liked)?<StarIcon/>:<FavoriteIcon/>
+            }
             </IconButton>
           </ListItemSecondaryAction>
         </ListItem>;
