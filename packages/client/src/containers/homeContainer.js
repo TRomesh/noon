@@ -13,20 +13,25 @@ import {withRouter} from "react-router-dom";
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
-  },
-  
+  }
 });
 
 
 class HomeContainer extends Component {
 
   state={
-
+    searchkey:''
   }
 
   handleChange = prop => event => {
     this.setState({ [prop]: event.target.value });
   };
+
+  handleKeyPress = (event) => {
+    if(event.key == 'Enter'){
+      this.props.Searchbrand({search:this.state.searchkey});
+    }
+  }
 
   componentDidMount(){
     this.props.Getbrands();
@@ -54,8 +59,9 @@ class HomeContainer extends Component {
         <div>
         <FormControl fullWidth className={classes.formControl}>
           <Input
-            id="amount"
-            onChange={this.handleChange('amount')}
+            id="searchkey"
+            onChange={this.handleChange('searchkey')}
+            onKeyPress={this.handleKeyPress}
             startAdornment={<InputAdornment position="start"><SearchIcon/></InputAdornment>}
           />
         </FormControl>

@@ -18,7 +18,7 @@ module.exports = function(app) {
   });
 
   app.get("/serachbrand", function(req, res) {
-    Brand.find({ $or:[ {title:req.query.title}, {description:req.query.description} ]},(err,brands)=>{
+    Brand.find({ $or:[ {title:req.query.search}, {description:req.query.search} ]},(err,brands)=>{
         if(err){return next(err);}
         res.json(brands);
     });

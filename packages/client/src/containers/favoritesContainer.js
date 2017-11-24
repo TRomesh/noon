@@ -2,19 +2,34 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withStyles } from 'material-ui/styles';
 import Brand from "../components/brand";
-import List from 'material-ui/List';
-import Button from 'material-ui/Button';
+import List from 'material-ui/List'
 import SearchIcon from 'material-ui-icons/Search';
+import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
+import { FormControl, FormHelperText } from 'material-ui/Form';
 import {withRouter} from "react-router-dom";
-import { GetLikedBrands, LikeBrand } from "../actions/brandActions";
+import { GetLikedBrands, LikeBrand, SearchBrand } from "../actions/brandActions";
 
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
-  },
+  }
 });
 
 class AccountContainer extends Component {
+
+  state={
+    searchkey:''
+  }
+    
+  handleChange = prop => event => {
+    this.setState({ [prop]: event.target.value });
+  };
+
+  handleKeyPress = (event) => {
+    if(event.key == 'Enter'){
+      this.props.Searchbrand({search:this.state.searchkey});
+    }
+  }
 
   componentDidMount(){
     this.props.Getlikedbrands();
@@ -46,9 +61,14 @@ class AccountContainer extends Component {
       <List dense={true}>
         {this.BrandList()}
         <div>
-          <Button fab color="primary" aria-label="search" className={classes.button}>
-            <SearchIcon />
-          </Button>
+        <FormControl fullWidth className={classes.formControl}>
+          <Input
+            id="searchkey"
+            onChange={this.handleChange('searchkey')}
+            onKeyPress={this.handleKeyPress}
+            startAdornment={<InputAdornment position="start"><SearchIcon/></InputAdornment>}
+          />
+        </FormControl>
         </div>
       </List>
     );
@@ -68,8 +88,11 @@ let mapDispatchToProps = dispatch => {
     },
     Likebrand: data => {
       dispatch(LikeBrand(data));
+    },
+    Searchbrand:data=>{
+      dispatch(SearchBrand(data));
     }
   };
 };
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(AccountContainer));
+export default withStyles(styles)(withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountContainer)));
