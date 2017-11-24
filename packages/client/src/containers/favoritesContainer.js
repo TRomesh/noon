@@ -7,6 +7,7 @@ import SearchIcon from 'material-ui-icons/Search';
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import {withRouter} from "react-router-dom";
+import Divider from 'material-ui/Divider';
 import { GetLikedBrands, LikeBrand, SearchBrand } from "../actions/brandActions";
 
 const styles = theme => ({
@@ -45,7 +46,8 @@ class AccountContainer extends Component {
       datetime={brand.datetime} 
       liked={brand.like}
       like={this.PutLikeBrand}
-      history={this.props.history}/>;
+      history={this.props.history}/>
+      ;
     });
   }
 
@@ -60,6 +62,7 @@ class AccountContainer extends Component {
     return (
       <List dense={true}>
         {this.BrandList()}
+        <Divider/>
         <div>
         <FormControl fullWidth className={classes.formControl}>
           <Input
