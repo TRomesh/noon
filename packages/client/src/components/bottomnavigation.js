@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import HomeIcon from 'material-ui-icons/Home';
 import StarIcon from 'material-ui-icons/Star';
@@ -29,8 +30,8 @@ handleChange = (event, value) => {
     return (
       <div>
       <BottomNavigation value={value} onChange={this.handleChange} className={classes.root}>
-        <BottomNavigationButton label="Home" value="recents" icon={<HomeIcon/>} />
-        <BottomNavigationButton label="Favorites" value="favorites" icon={<StarIcon />} />
+        <BottomNavigationButton label="Home" value="recents" icon={<Link to="/"><HomeIcon/></Link>} />
+        <BottomNavigationButton label="Favorites" value="favorites" icon={<Link to="/favorite"><StarIcon /></Link>} />
       </BottomNavigation>
         {this.props.children}
       </div>
